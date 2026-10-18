@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "voicecommand",
+    "name": "Voice Command Mod",
+    "description": "Simple Voice Chat + Vosk offline speech recognition client mod for 1.12.2.",
+    "version": "1.0.0",
+    "mcversion": "1.12.2",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["VoiceCommand"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": ["voicechat"]
+  }
+]

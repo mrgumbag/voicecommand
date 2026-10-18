@@ -1,0 +1,65 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:5.1.+'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'java'
+
+version = '1.0.0'
+group = 'com.example.voicecommand'
+archivesBaseName = 'voicecommand-1.12.2'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+
+minecraft {
+    mappings channel: 'stable', version: '39-1.12'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "maxhenkel"
+        url = "https://maven.maxhenkel.de/repository/public"
+    }
+}
+
+configurations {
+    embed
+    implementation.extendsFrom(embed)
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
+    compileOnly 'de.maxhenkel.voicechat:voicechat-api:2.5.0'
+
+    embed('com.alphacephei:vosk:0.3.45') {
+        exclude group: 'net.java.dev.jna', module: 'jna'
+    }
+    embed 'net.java.dev.jna:jna:5.13.0'
+}
+
+jar {
+    from {
+        configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+    manifest {
+        attributes([
+                "Specification-Title"     : "voicecommand",
+                "Specification-Vendor"    : "example",
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : "${version}",
+                "Implementation-Vendor"   : "example"
+        ])
+    }
+}
